@@ -53,21 +53,20 @@ class JobWatcher extends Watcher
     {
         $batchId = Str::uuid()->toString();
 
-        try {
+        if(Monitoring::isEnabled()){
+            try {
 
-            if(!Monitoring::isEnabled()) return;
+                $content = array_merge([
+                    'status' => 'pending',
+                    'batch_id' => $batchId,
+                ], $this->defaultJobData($connection, $queue, $payload, $this->data($payload)));
+                app(BatchIdService::class)->setBatchId($batchId);
 
-            $content = array_merge([
-                'status' => 'pending',
-                'batch_id' => $batchId,
-            ], $this->defaultJobData($connection, $queue, $payload, $this->data($payload)));
-            app(BatchIdService::class)->setBatchId($batchId);
-
-            Monitoring::recordJob(IncomingEntry::make($content));
-        } catch (\Exception $exception) {
-            loggly()->to('file')->performedOn(self::class)->exception($exception)->level('error')->log($exception->getMessage());
+                Monitoring::recordJob(IncomingEntry::make($content));
+            } catch (\Exception $exception) {
+                loggly()->to('file')->performedOn(self::class)->exception($exception)->level('error')->log($exception->getMessage());
+            }
         }
-
         return (object)['batch_id' => $batchId];
     }
 
