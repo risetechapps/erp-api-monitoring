@@ -1,16 +1,16 @@
 {
-    "name": "risetech/monitoring",
+    "name": "risetechapps/monitoring",
     "description": "",
     "keywords": [
         "risetech",
         "logs"
     ],
-    "homepage": "https://github.com/risetech/monitoring",
+    "homepage": "https://github.com/risetechapps/monitoring",
     "license": "MIT",
     "type": "library",
     "authors": [
         {
-            "name": "RiseTech",
+            "name": "RiseTechApps",
             "email": "apps@risetech.com.br",
             "role": "Developer"
         }
