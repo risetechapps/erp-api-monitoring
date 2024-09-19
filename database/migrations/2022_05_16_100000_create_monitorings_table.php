@@ -41,18 +41,19 @@ return new class extends Migration
      */
     public function up()
     {
-        $this->schema->create('monitorings', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->uuid('uuid');
-            $table->uuid('batch_id');
-            $table->string('type', 20);
-            $table->json('content')->nullable();
-            $table->json('tags')->nullable();
-            $table->timestamps();
-
-            $table->unique('uuid');
-            $table->index('created_at');
-        });
+        if (!$this->schema->hasTable('monitorings')) {
+            $this->schema->create('monitorings', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->uuid('uuid');
+                $table->uuid('batch_id');
+                $table->string('type', 20);
+                $table->json('content')->nullable();
+                $table->json('tags')->nullable();
+                $table->timestamps();
+                $table->unique('uuid');
+                $table->index('created_at');
+            });
+        }
     }
 
     /**
