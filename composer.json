@@ -1,0 +1,63 @@
+{
+    "name": "risetech/monitoring",
+    "description": "",
+    "keywords": [
+        "risetech",
+        "logs"
+    ],
+    "homepage": "https://github.com/risetech/monitoring",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "RiseTech",
+            "email": "apps@risetech.com.br",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "aws/aws-sdk-php": "^3.321",
+        "hisorange/browser-detect": "^4.5",
+        "illuminate/support": "^9.0|^10.0",
+        "ext-pdo": "*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0|^8.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RiseTech\\Monitoring\\": "src"
+        },
+        "files": [
+            "/src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RiseTech\\Monitoring\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RiseTech\\Monitoring\\MonitoringServiceProvider"
+            ],
+            "aliases": {
+                "Logs": "RiseTech\\Monitoring\\MonitoringFacade"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "version": "1.0"
+}
