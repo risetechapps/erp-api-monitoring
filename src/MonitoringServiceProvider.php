@@ -8,6 +8,8 @@ use Illuminate\Support\ServiceProvider;
 use RiseTech\Monitoring\Http\Middleware\DisableMonitoringMiddleware;
 use RiseTech\Monitoring\Repository\Contracts\MonitoringRepositoryInterface;
 use RiseTech\Monitoring\Repository\MonitoringRepository;
+use RiseTech\Monitoring\Repository\MonitoringRepositoryHttp;
+use RiseTech\Monitoring\Repository\MonitoringRepositoryMysql;
 use RiseTech\Monitoring\Services\BatchIdService;
 
 class MonitoringServiceProvider extends ServiceProvider
@@ -35,10 +37,18 @@ class MonitoringServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'monitoring');
 
         $this->app->bind(MonitoringRepositoryInterface::class, function ($app) {
             // Passe a conexão desejada aqui
-            return new MonitoringRepository(env('DB_CONNECTION', 'mysql'));
+            $driver = config('monitoring.driver');
+            $driversConfig = config("monitoring.drivers");
+
+            return match ($driver) {
+                'mysql' => new MonitoringRepositoryMysql($driversConfig['mysql']['connection']),
+                'http' => new MonitoringRepositoryHttp($driversConfig['http']['url'], $driversConfig['http']['token']),
+                default => throw new \Exception("Driver {$driver} não é suportado.")
+            };
         });
 
         $this->app->singleton('monitoring', function () {

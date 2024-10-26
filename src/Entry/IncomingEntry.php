@@ -57,6 +57,9 @@ class IncomingEntry
 
         $this->recordedAt = now();
 
+        $this->tags = $content['tags'];
+        unset($content['tags']);
+
         $this->content = array_merge($content, ['hostname' => gethostname()]);
 
         $this->batchIdService = app(BatchIdService::class);

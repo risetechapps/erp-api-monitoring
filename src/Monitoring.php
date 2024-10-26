@@ -6,9 +6,7 @@ use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
 use RiseTech\Monitoring\Entry\IncomingEntry;
-use RiseTech\Monitoring\Http\Controllers\MonitoringController;
 use RiseTech\Monitoring\Repository\Contracts\MonitoringRepositoryInterface;
 use RiseTech\Monitoring\Traits\Record\Record;
 use Throwable;
@@ -164,12 +162,10 @@ class Monitoring
 
             self::$buffer[] = $entry;
 
-            // Se o buffer atingir o tamanho especificado, grava os dados no banco de dados.
             if (count(self::$buffer) >= self::$bufferSize) {
                 static::flushBuffer();
             }
         } catch (\Exception $exception) {
-            // Registra exceção em caso de erro ao gravar a entrada.
         }
     }
 
@@ -191,6 +187,7 @@ class Monitoring
             });
 
         } catch (\Exception $e) {
+
         }
     }
 
@@ -243,18 +240,5 @@ class Monitoring
         if (!empty(self::$buffer)) {
             self::flushBuffer();
         }
-    }
-
-    public static function routes(array $options = []): void
-    {
-        $options['as'] = "monitoring.";
-        $options['middleware'][] = 'monitoring.disable';
-
-        Route::group($options, function () use ($options) {
-
-            Route::get('/monitorings', [MonitoringController::class, 'index'])->name('index');
-            Route::get('/monitorings/{id}', [MonitoringController::class, 'show'])->name('show');
-            Route::get('/monitorings/types/{id}', [MonitoringController::class, 'types'])->name('types');
-        });
     }
 }
