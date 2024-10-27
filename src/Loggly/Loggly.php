@@ -298,7 +298,7 @@ class Loggly
                 Monitoring::recordLoggly($entry);
                 break;
             case 'file':
-                file_put_contents(storage_path('logs/custom.log'), json_encode($entry) . PHP_EOL, FILE_APPEND);
+                file_put_contents(storage_path('logs/error-monitoring.log'), json_encode($entry) . PHP_EOL, FILE_APPEND);
                 break;
             case 'sentry':
                 // Código para enviar a Sentry (exemplo fictício)

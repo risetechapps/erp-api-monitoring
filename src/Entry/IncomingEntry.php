@@ -57,8 +57,10 @@ class IncomingEntry
 
         $this->recordedAt = now();
 
-        $this->tags = $content['tags'];
-        unset($content['tags']);
+        if(array_key_exists('tags', $content)){
+            $this->tags = $content['tags'];
+            unset($content['tags']);
+        }
 
         $this->content = array_merge($content, ['hostname' => gethostname()]);
 
