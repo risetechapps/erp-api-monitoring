@@ -1,11 +1,11 @@
 {
-    "name": "risetechapps/monitoring",
+    "name": "risetechapps/erp-api-monitoring",
     "description": "",
     "keywords": [
         "risetech",
         "logs"
     ],
-    "homepage": "https://github.com/risetechapps/monitoring",
+    "homepage": "https://github.com/risetechapps/erp-api-monitoring",
     "license": "MIT",
     "type": "library",
     "authors": [
