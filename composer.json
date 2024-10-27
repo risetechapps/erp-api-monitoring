@@ -44,9 +44,6 @@
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
 
     },
-    "config": {
-        "sort-packages": true
-    },
     "extra": {
         "laravel": {
             "providers": [
@@ -58,5 +55,14 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://github.com/risetechapps/erp-api-monitoring"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    }
 }
